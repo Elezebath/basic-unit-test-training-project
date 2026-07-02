@@ -12,26 +12,6 @@ A Java project for practicing unit testing using **JUnit 5**, **AssertJ**, and *
 - AssertJ
 - Mockito
 
-## Project Structure
-
-```
-src/main/java/
-├── task1      → AgeCalculator
-├── task23     → AnimalValidator
-├── task4      → AnimalSorter
-├── task5      → AnimalCsvParser
-├── task6      → IntakeService
-└── stretch    → AnimalReportWriter
-
-src/test/java/
-├── task1
-├── task23
-├── task4
-├── task5
-├── task6
-└── stretch
-```
-
 ## Completed Tasks
 
 - ✅ Task 1 – Unit tests for business logic
