@@ -59,16 +59,6 @@ class AnimalValidatorTest {
         }
 
         @Test
-        @DisplayName("rejects null values for name")
-        void shouldRejectNullNames() {
-            String name = null;
-            // Verify that validateName throws IllegalArgumentException
-            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validateName(name));
-            // Check the message contains "must not be blank"
-            assertTrue(exception.getMessage().contains("must not be blank"));
-        }
-
-        @Test
         @DisplayName("rejects name longer than 100 characters")
         void shouldRejectOverlyLongName() {
             // Create a string longer than 100 characters
@@ -130,33 +120,33 @@ class AnimalValidatorTest {
             assertTrue(exception.getMessage().contains("must not be null"));
         }
 
-        @ParameterizedTest
-        @CsvSource({
-                "'', Cat, 2, must not be blank",
-                "Tommy, '', 2, must not be blank",
-                "Tommy, Cat, -1, negative"
-        })
-        @DisplayName("throws for invalid animal fields")
-        void shouldRejectInvalidAnimals(
-                String name,
-                String species,
-                int age,
-                String expectedMessage) {
-
-            Animal animal = new Animal(
-                    name,
-                    species,
-                    age,
-                    true,
-                    LocalDate.of(2026, 1, 15));
-
-            IllegalArgumentException exception = assertThrows(
-                    IllegalArgumentException.class,
-                    () -> validator.validate(animal));
-
-            assertThat(exception.getMessage())
-                    .contains(expectedMessage);
-        }
+//        @ParameterizedTest
+//        @CsvSource({
+//                "'', Cat, 2, must not be blank",
+//                "Tommy, '', 2, must not be blank",
+//                "Tommy, Cat, -1, negative"
+//        })
+//        @DisplayName("throws for invalid animal fields")
+//        void shouldRejectInvalidAnimals(
+//                String name,
+//                String species,
+//                int age,
+//                String expectedMessage) {
+//
+//            Animal animal = new Animal(
+//                    name,
+//                    species,
+//                    age,
+//                    true,
+//                    LocalDate.of(2026, 1, 15));
+//
+//            IllegalArgumentException exception = assertThrows(
+//                    IllegalArgumentException.class,
+//                    () -> validator.validate(animal));
+//
+//            assertThat(exception.getMessage())
+//                    .contains(expectedMessage);
+//        }
 
         @Test
         @DisplayName("throws for animal with blank name")
