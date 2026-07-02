@@ -79,7 +79,7 @@ class AnimalCsvParserTest {
             // Assert animal.isVaccinated() == false
             assertThat(result).isPresent();
             Animal animal = result.get();
-            assertThat(animal.isVaccinated()).isTrue();
+            assertThat(animal.isVaccinated()).isFalse();
         }
     }
 
@@ -195,12 +195,12 @@ class AnimalCsvParserTest {
             Path tempFile = Files.createTempFile("test-intake", ".csv");
             try {
                 String content = """
-                    name,species,age,vaccinated,intakeDate
-                    Buddy,Dog,3,true,2026-01-15
-                    Luna,Cat,2,true,2026-01-10
-                    Max,Dog,5,false,2026-01-20
-                    Buddy,Dog,old,true,2026-01-15
-                    """;
+                        name,species,age,vaccinated,intakeDate
+                        Buddy,Dog,3,true,2026-01-15
+                        Luna,Cat,2,true,2026-01-10
+                        Max,Dog,5,false,2026-01-20
+                        Buddy,Dog,old,true,2026-01-15
+                        """;
                 Files.writeString(tempFile, content, StandardCharsets.UTF_8);
 
                 // Call parser.parseFile(tempFile)
@@ -240,11 +240,25 @@ class AnimalCsvParserTest {
         }
 
         @Test
+        @DisplayName("returns empty result for empty file")
+        void shouldReturnEmptyForEmptyFile() throws IOException {
+            Path file = Files.createTempFile("animals", ".csv");
+            try {
+                AnimalCsvParser.ParseResult result = parser.parseFile(file);
+                assertThat(result.animals()).isEmpty();
+                assertThat(result.skippedRows()).isZero();
+            } finally {
+                // Clean up: Files.deleteIfExists(tempFile)
+                Files.deleteIfExists(file);
+            }
+        }
+
+        @Test
         @DisplayName("throws IOException for non-existent file")
         void shouldThrowForMissingFile() {
             // Call parser.parseFile(Path.of("does-not-exist.csv"))
             // Assert it throws IOException
-            assertThrows( IOException.class, () -> parser.parseFile(Path.of("does-not-exist.csv")));
+            assertThrows(IOException.class, () -> parser.parseFile(Path.of("does-not-exist.csv")));
         }
     }
 }
