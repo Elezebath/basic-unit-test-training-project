@@ -8,16 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Task 1: Pure logic tests
- *
+ * ------------------------
  * Practice:
  * - Arrange-Act-Assert pattern
  * - Good test naming
  * - assertEquals for return values
  * - assertThrows for invalid input
  *
- * Instructions:
- * Write tests for AgeCalculator. Each TODO describes one test to write.
- * Remove the TODO comments as you implement each test.
  */
 @DisplayName("AgeCalculator")
 class AgeCalculatorTest {
@@ -47,6 +44,15 @@ class AgeCalculatorTest {
         // Test that 3 years = 36 months
         int months = calculator.toMonths(3);
         assertEquals(36, months);
+    }
+
+    @Test
+    @DisplayName("toMonths: max large positive years returns correct months")
+    void shouldConvertPositiveMaxIntegerYearsToCorrespondingMonths() {
+        // Test that max integer years = max integer value * 12 months
+        int possibleMaxYear = Integer.MAX_VALUE / 12;
+        int months = calculator.toMonths(possibleMaxYear);
+        assertEquals(possibleMaxYear * 12, months);
     }
 
     @Test
